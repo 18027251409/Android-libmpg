@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Android_libmpg_Test</name>
+	<name>Android-libmpg_Test</name>
 	<comment></comment>
 	<projects>
-		<project>Android_libmpg</project>
+		<project>Android-libmpg</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
