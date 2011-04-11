@@ -1,0 +1,12 @@
+#define HAVE_STDLIB_H
+#define HAVE_SIGNAL_H
+#define HAVE_UNISTD_H
+#define HAVE_SYS_TYPES_H
+#define HAVE_INTTYPES_H
+#define HAVE_STDINT_H
+#define HAVE_LIMITS_H
+#define HAVE_STRING_H
+#define HAVE_SYS_TIME_H
+#define HAVE_SYS_SELECT_H
+#define HAVE_STRERROR
+#define OPT_ARM

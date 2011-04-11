@@ -1,0 +1,2 @@
+This file is only present to satisfy the ndk builder which looks for it
+to signify the root directory of the project.
