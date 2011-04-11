@@ -1,3 +1,8 @@
+/* Since we are not actually running configure this file supplies
+ * the config.h values that would normally get created from
+ * configure. We instead hard code the values for Android.
+ */
+
 #define HAVE_STDLIB_H
 #define HAVE_SIGNAL_H
 #define HAVE_UNISTD_H
