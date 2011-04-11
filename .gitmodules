@@ -1,3 +1,3 @@
-[submodule "jni/mpg123"]
-	path = jni/mpg123
+[submodule "Android-libmpg/jni/mpg123"]
+	path = Android-libmpg/jni/mpg123
 	url = ../Android-libmpg.git
