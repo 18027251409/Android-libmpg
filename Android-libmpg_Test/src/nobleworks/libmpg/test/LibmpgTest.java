@@ -86,63 +86,63 @@ public class LibmpgTest extends AndroidTestCase
         }
     }
 
-    public void testGetSupportedRatesReportsSupportFor8000Hz()
+    public void testShouldReportSupportFor8000Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(8000));
     }
 
-    public void testGetSupportedRatesReportsSupportFor11025Hz()
+    public void testShouldReportSupportFor11025Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(11025));
     }
 
-    public void testGetSupportedRatesReportsSupportFor12000Hz()
+    public void testShouldReportSupportFor12000Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(12000));
     }
 
-    public void testGetSupportedRatesReportsSupportFor16000Hz()
+    public void testShouldReportSupportFor16000Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(16000));
     }
 
-    public void testGetSupportedRatesReportsSupportFor22500Hz()
+    public void testShouldReportSupportFor22500Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(22050));
     }
 
-    public void testGetSupportedRatesReportsSupportFor24000Hz()
+    public void testShouldReportSupportFor24000Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(24000));
     }
 
-    public void testGetSupportedRatesReportsSupportFor32000Hz()
+    public void testShouldReportSupportFor32000Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(32000));
     }
 
-    public void testGetSupportedRatesReportsSupportFor44100Hz()
+    public void testShouldReportSupportFor44100Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
         assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(44100));
     }
 
-    public void testGetSupportedRatesReportsSupportFor48000Hz()
+    public void testShouldReportSupportFor48000Hz()
     {
         int[] supportedRates = MP3Decoder.getSupportedRates();
 
