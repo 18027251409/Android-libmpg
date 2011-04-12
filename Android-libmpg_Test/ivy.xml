@@ -1,0 +1,8 @@
+<ivy-module version="2.0">
+    <info organisation="nobleworks" module="libmpg"/>
+    <dependencies>
+        <dependency org="org.hamcrest" name="hamcrest-all" rev="1.0"/>
+        <dependency org="org.mockito" name="mockito-core" rev="1.8.5"/>
+        <dependency org="commons-lang" name="commons-lang" rev="2.6"/>
+    </dependencies>
+</ivy-module>

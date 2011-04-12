@@ -4,5 +4,8 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Android-libmpg"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?ivyXmlPath=ivy.xml&amp;confs=*&amp;doRetrieve=true&amp;retrievePattern=libs%2F%5Bartifact%5D.%5Bext%5D&amp;retrieveSync=true&amp;retrieveConfs=*&amp;retrieveTypes=jar"/>
+	<classpathentry kind="lib" path="libs/commons-lang.jar"/>
+	<classpathentry kind="lib" path="libs/hamcrest-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,7 +5,8 @@ include $(CLEAR_VARS)
 
 MPG123_CFLAGS 	  := -O2 -Wall -D__ANDROID__ -I. -I mpg123/src
 
-MPG123_SRC_FILES := mpg123/src/libmpg123/compat.c \
+MPG123_SRC_FILES := \
+	mpg123/src/libmpg123/compat.c \
 	mpg123/src/libmpg123/frame.c \
 	mpg123/src/libmpg123/id3.c \
 	mpg123/src/libmpg123/format.c \
@@ -34,7 +35,7 @@ MPG123_SRC_FILES := mpg123/src/libmpg123/compat.c \
 
 LOCAL_MODULE    := mpg
 LOCAL_ARM_MODE  := arm
-LOCAL_SRC_FILES := $(MPG123_SRC_FILES)
+LOCAL_SRC_FILES := MP3Decoder.cpp $(MPG123_SRC_FILES)
 LOCAL_CFLAGS    := $(MPG123_CFLAGS)
 
 include $(BUILD_SHARED_LIBRARY)
