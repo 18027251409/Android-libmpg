@@ -1,6 +1,4 @@
 LOCAL_PATH := $(call my-dir)
-#include $(CLEAR_VARS)
-
 include $(CLEAR_VARS)
 
 MPG123_CFLAGS 	  := -O2 -Wall -D__ANDROID__ -I. -I mpg123/src
