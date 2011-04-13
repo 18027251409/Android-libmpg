@@ -14,4 +14,8 @@
 #define HAVE_SYS_TIME_H
 #define HAVE_SYS_SELECT_H
 #define HAVE_STRERROR
+#define ACCURATE_ROUNDING
+#define FRAME_INDEX
+#define INDEX_SIZE 2000
+#define TIMEOUT_READ
 #define OPT_ARM

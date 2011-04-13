@@ -1,151 +1,124 @@
 package nobleworks.libmpg.test;
 
-import static org.hamcrest.Matchers.hasItemInArray;
+import static nobleworks.libmpg.test.HamcrestAssert.*;
+import static org.hamcrest.Matchers.*;
+import nobleworks.libmpg.Encoding;
 import nobleworks.libmpg.MP3Decoder;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.StringDescription;
+import org.hamcrest.number.IsGreaterThan;
+import org.mockito.internal.matchers.GreaterThan;
 
 import android.test.AndroidTestCase;
 
 public class LibmpgTest extends AndroidTestCase
 {
-    /**
-    * Asserts that <code>actual</code> satisfies the condition specified by
-    * <code>matcher</code>. If not, an {@link AssertionError} is thrown with
-    * information about the matcher and failing value. Example:
-    *
-    * <pre>
-    * assertThat(0, is(1)); // fails:
-    * // failure message:
-    * // expected: is &lt;1&gt;
-    * // got value: &lt;0&gt;
-    * assertThat(0, is(not(1))) // passes
-    * </pre>
-    *
-    * @param <T>
-    * the static type accepted by the matcher (this can flag obvious
-    * compile-time problems such as {@code assertThat(1, is("a"))}
-    * @param actual
-    * the computed value being compared
-    * @param matcher
-    * an expression, built of {@link Matcher}s, specifying allowed
-    * values
-    *
-    * @see org.hamcrest.CoreMatchers
-    * @see org.junit.matchers.JUnitMatchers
-    */
-    public static <T> void assertThat(T actual, Matcher<T> matcher)
+    public void testSupportedRates()
     {
-        assertThat("", actual, matcher);
-    }
-
-    /**
-    * Asserts that <code>actual</code> satisfies the condition specified by
-    * <code>matcher</code>. If not, an {@link AssertionError} is thrown with
-    * the reason and information about the matcher and failing value. Example:
-    *
-    * <pre>
-    * :
-    * assertThat(&quot;Help! Integers don't work&quot;, 0, is(1)); // fails:
-    * // failure message:
-    * // Help! Integers don't work
-    * // expected: is &lt;1&gt;
-    * // got value: &lt;0&gt;
-    * assertThat(&quot;Zero is one&quot;, 0, is(not(1))) // passes
-    * </pre>
-    *
-    * @param reason
-    * additional information about the error
-    * @param <T>
-    * the static type accepted by the matcher (this can flag obvious
-    * compile-time problems such as {@code assertThat(1, is("a"))}
-    * @param actual
-    * the computed value being compared
-    * @param matcher
-    * an expression, built of {@link Matcher}s, specifying allowed
-    * values
-    *
-    * @see org.hamcrest.CoreMatchers
-    * @see org.junit.matchers.JUnitMatchers
-    */
-    public static <T> void assertThat(String reason, T actual, Matcher <T> matcher)
-    {
-        if (!matcher.matches(actual))
+        int[] expectedRates =
         {
-            Description description= new StringDescription();
-            description.appendText(reason);
-            description.appendText("\nExpected: ");
-            matcher.describeTo(description);
-            description.appendText("\n got: ");
-            description.appendValue(actual);
-            description.appendText("\n");
-            throw new java.lang.AssertionError(description.toString());
+                8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000
+        };
+        
+        Integer[] supportedRates = ArrayUtils.toObject(MP3Decoder.getSupportedRates());
+
+        for( int rate : expectedRates )
+        {
+            assertThat(supportedRates, hasItemInArray(rate));
         }
     }
-
-    public void testShouldReportSupportFor8000Hz()
+    
+    public void testSupportedEncodings()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
+        Encoding[] expectedEncodings =
+        {
+                Encoding.ALAW_8, Encoding.ULAW_8,
+                Encoding.PCM_UNSIGNED_8, Encoding.PCM_SIGNED_8,
+                Encoding.PCM_UNSIGNED_16, Encoding.PCM_SIGNED_16,
+                Encoding.PCM_UNSIGNED_24, Encoding.PCM_SIGNED_24,
+                Encoding.PCM_UNSIGNED_32, Encoding.PCM_SIGNED_32,
+                // Only one size of floating point is supported
+                Encoding.PCM_FLOAT_64
+        };
 
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(8000));
+        Encoding[] supportedEncodings = MP3Decoder.getSupportedEncodings();
+        
+        for(Encoding encoding : expectedEncodings)
+        {
+            assertThat(supportedEncodings,hasItemInArray(encoding));
+        }
     }
-
-    public void testShouldReportSupportFor11025Hz()
+    
+    public void testGettingErrorMessage()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(11025));
+        // At least test that it doesn't die and returns a non-empty string
+        String message = MP3Decoder.getErrorMessage(MP3Decoder.Error.DONE);
+        
+        assertThat(message.length(), greaterThan(1));
     }
-
-    public void testShouldReportSupportFor12000Hz()
+    
+    public void testThat8BitOutputReportsAsSupported()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(12000));
+        assertThat(MP3Decoder.Feature.OUTPUT_8BIT.isSupported(), is(true));
     }
-
-    public void testShouldReportSupportFor16000Hz()
+    
+    public void testThat16BitOutputReportsAsSupported()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(16000));
+        assertThat(MP3Decoder.Feature.OUTPUT_16BIT.isSupported(), is(true));
     }
-
-    public void testShouldReportSupportFor22500Hz()
+    
+    public void testThat32BitOutputReportsAsSupported()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(22050));
+        assertThat(MP3Decoder.Feature.OUTPUT_32BIT.isSupported(), is(true));
     }
-
-    public void testShouldReportSupportFor24000Hz()
+    
+    public void testThatBuildingOfFrameIndexReportsAsSupported()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(24000));
+        assertThat(MP3Decoder.Feature.INDEX.isSupported(), is(true));
     }
-
-    public void testShouldReportSupportFor32000Hz()
+    
+    public void testThatID3V2ParsingReportsAsSupported()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(32000));
+        assertThat(MP3Decoder.Feature.PARSE_ID3V2.isSupported(), is(true));
     }
-
-    public void testShouldReportSupportFor44100Hz()
+    
+    public void testThatIcyParsingReportsAsSupported()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(44100));
+        assertThat(MP3Decoder.Feature.PARSE_ICY.isSupported(), is(true));
     }
-
-    public void testShouldReportSupportFor48000Hz()
+    
+    public void testThatLayer1DecodingReportsAsSupported()
     {
-        int[] supportedRates = MP3Decoder.getSupportedRates();
-
-        assertThat(ArrayUtils.toObject(supportedRates), hasItemInArray(48000));
+        assertThat(MP3Decoder.Feature.DECODE_LAYER1.isSupported(), is(true));
+    }
+    
+    public void testThatLayer2DecodingReportsAsSupported()
+    {
+        assertThat(MP3Decoder.Feature.DECODE_LAYER2.isSupported(), is(true));
+    }
+    
+    public void testThatLayer3DecodingReportsAsSupported()
+    {
+        assertThat(MP3Decoder.Feature.DECODE_LAYER3.isSupported(), is(true));
+    }
+    
+    public void testThatAccurateDecodingReportsAsSupported()
+    {
+        assertThat(MP3Decoder.Feature.DECODE_ACCURATE.isSupported(), is(true));
+    }
+    
+    public void testThatDownSampleDecodingReportsAsSupported()
+    {
+        assertThat(MP3Decoder.Feature.DECODE_DOWNSAMPLE.isSupported(), is(true));
+    }
+    
+    public void testThatFlexibleRateDecodingReportsAsSupported()
+    {
+        assertThat(MP3Decoder.Feature.DECODE_NTOM.isSupported(), is(true));
+    }
+    
+    public void testThatReaderWithTimeoutReportsAsSupported()
+    {
+        assertThat(MP3Decoder.Feature.TIMEOUT_READ.isSupported(), is(true));
     }
 }

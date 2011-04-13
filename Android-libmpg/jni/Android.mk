@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-MPG123_CFLAGS 	  := -O2 -Wall -D__ANDROID__ -I. -I mpg123/src
+MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I. -I mpg123/src
 
 MPG123_SRC_FILES := \
 	mpg123/src/libmpg123/compat.c \
@@ -29,6 +29,7 @@ MPG123_SRC_FILES := \
 	mpg123/src/libmpg123/equalizer.c\
 	mpg123/src/libmpg123/dither.c\
 	mpg123/src/libmpg123/tabinit.c\
+	mpg123/src/libmpg123/synth_arm_accurate.S\
 	mpg123/src/libmpg123/feature.c
 
 LOCAL_MODULE    := mpg
