@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I. -I mpg123/src
+MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I.
 
 MPG123_SRC_FILES := \
 	mpg123/src/libmpg123/compat.c \

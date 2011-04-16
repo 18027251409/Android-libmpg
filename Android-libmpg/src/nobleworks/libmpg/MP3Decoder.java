@@ -1,5 +1,7 @@
 package nobleworks.libmpg;
 
+import java.nio.ShortBuffer;
+
 public class MP3Decoder
 {
     public interface Error
@@ -80,6 +82,57 @@ public class MP3Decoder
             return isFeatureSupported(ordinal());
         }
     }
+    
+    public interface Flags
+    {
+        /** Force playback of left channel only. */
+        int MONO_LEFT = 0x1;
+
+        /** Force playback of right channel only. */
+        int MONO_RIGHT = 0x2;
+
+        /** Force playback of mixed mono. */
+        int MONO_MIX = 0x4;
+
+        /** Force stereo output. */
+        int FORCE_STEREO = 0x8;
+
+        /** Force 8bit formats. */
+        int FORCE_8BIT = 0x10;
+
+        /** Suppress any printouts (overrules verbose). */
+        int QUIET = 0x20;
+
+        /** Enable gapless decoding (default on if libmpg123 has support). */
+        int GAPLESS = 0x40;
+
+        /** Disable resync stream after error. */
+        int NO_RESYNC = 0x80;
+
+        /** Enable small buffer on non-seekable streams to allow some peek-ahead (for better MPEG sync). */
+        int SEEKBUFFER = 0x100;
+
+        /** Enable fuzzy seeks (guessing byte offsets or using approximate seek points from Xing TOC) */
+        int FUZZY = 0x200;
+
+        /** Force floating point output (32 or 64 bits depends on mpg123 internal precision). */
+        int FORCE_FLOAT = 0x400;
+
+        /** Do not translate ID3 text data to UTF-8. ID3 strings will contain the raw text data, with the first byte containing the ID3 encoding code. */
+        int PLAIN_ID3TEXT = 0x800;
+
+        /** Ignore any stream length information contained in the stream, which can be contained in a 'TLEN' frame of an ID3v2 tag or a Xing tag */
+        int IGNORE_STREAMLENGTH = 0x1000;
+
+        /** Do not parse ID3v2 tags, just skip them. */
+        int SKIP_ID3V2 = 0x2000;
+
+        /** Do not parse the LAME/Xing info frame, treat it as normal MPEG data. */
+        int IGNORE_INFOFRAME = 0x4000;
+
+        /** Force some mono mode: This is a test bitmask for seeing if any mono forcing is active. */
+        int FORCE_MONO = MONO_LEFT | MONO_RIGHT | MONO_MIX;
+    }
 
     private static native int initialize();
 
@@ -116,20 +169,42 @@ public class MP3Decoder
     
     private long handle;
     
-    private static native long create();
-    private native void delete();
-    private native int close();
+    private native void delete(long handle);
 
-    public MP3Decoder()
+    /**
+     * Opens the given file for mp3 decoding. Throws an IllegalArugmentException in case the file could not be opened.
+     * 
+     * @param filename the filename
+     */
+    public MP3Decoder(String filename)
     {
-        handle = create();
+        handle = openFile(filename);
+
+  //
+ //       if (handle == 0) throw new IllegalArgumentException("couldn't open file");
+    }
+
+    public native int setFlags(long handle, int flags);
+    
+    public int setFlags(int flags)
+    {
+        return setFlags(handle, flags);
     }
     
+    public native int getFlags(long handle);
+    
+    public int getFlags()
+    {
+        return getFlags(handle);
+    }
+    
+    private native long openFile (String filename);
+ 
     public void dispose()
     {
         if(handle != 0)
         {
-            delete();
+            delete(handle);
             handle = 0;
         }
     }
@@ -137,5 +212,41 @@ public class MP3Decoder
     public void finalize()
     {
         dispose();
+    }
+
+    public int readSamples (ShortBuffer samples)
+    {
+        int read = readSamples(handle, samples, samples.capacity());
+        samples.position(0);
+        return read;
+    }
+
+    private native int readSamples (long handle, ShortBuffer buffer, int numSamples);
+
+    public native int skipSamples(long handle, int numSamples);
+
+    public int skipSamples(int numSamples)
+    {
+        return skipSamples(handle, numSamples);
+    }
+
+    private native int getNumChannels(long handle);
+    private native int getRate(long handle);
+    private native float getLength(long handle);
+
+
+    public int getNumChannels()
+    {
+        return getNumChannels(handle);
+    }
+
+    public int getRate()
+    {
+        return getRate(handle);
+    }
+
+    public float getLength()
+    {
+        return getLength(handle);
     }
 }

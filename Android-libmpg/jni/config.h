@@ -16,6 +16,6 @@
 #define HAVE_STRERROR
 #define ACCURATE_ROUNDING
 #define FRAME_INDEX
-#define INDEX_SIZE 2000
+#define INDEX_SIZE 1000
 #define TIMEOUT_READ
 #define OPT_ARM
