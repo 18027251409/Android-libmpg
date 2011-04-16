@@ -4,7 +4,7 @@
 #include "generatedJniHeaders/nobleworks_libmpg_Encoding_Ordinals.h"
 #include <stddef.h>
 #include <fcntl.h>
-#include "mpg123/src/libmpg123/compat.h"
+#include "libmpg123/compat.h"
 #include "mpg123.h"
 #include <jni.h>
 
