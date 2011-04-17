@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I.
+MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I . -I libmpg123
 
 MPG123_SRC_FILES := \
 	libmpg123/compat.c \
@@ -36,6 +36,7 @@ LOCAL_MODULE    := mpg
 LOCAL_ARM_MODE  := arm
 LOCAL_SRC_FILES := MP3Decoder.cpp $(MPG123_SRC_FILES)
 LOCAL_CFLAGS    := $(MPG123_CFLAGS)
+LOCAL_LDLIBS    := -llog
 
 include $(BUILD_SHARED_LIBRARY)
 

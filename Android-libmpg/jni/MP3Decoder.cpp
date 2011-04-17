@@ -26,9 +26,9 @@ struct Mp3File
 
 	~Mp3File()
 	{
-//		mpg123_close(handle);
-//		mpg123_delete(handle);
-//		delete[] buffer;
+		mpg123_close(handle);
+		mpg123_delete(handle);
+		delete[] buffer;
 	}
 };
 
