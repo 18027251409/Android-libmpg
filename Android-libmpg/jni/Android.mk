@@ -1,7 +1,12 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I . -I libmpg123
+MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I . -I libmpg123 -g \
+	-DACCURATE_ROUNDING \
+	-DOPT_ARM \
+	-DREAL_IS_FIXED \
+	-DNO_REAL \
+	-DNO_32BIT
 
 MPG123_SRC_FILES := \
 	libmpg123/compat.c \
@@ -21,8 +26,6 @@ MPG123_SRC_FILES := \
 	libmpg123/optimize.c\
 	libmpg123/synth.c\
 	libmpg123/synth_8bit.c\
-	libmpg123/synth_real.c\
-	libmpg123/synth_s32.c\
 	libmpg123/synth_arm.S\
 	libmpg123/ntom.c\
 	libmpg123/dct64.c\
@@ -36,7 +39,7 @@ LOCAL_MODULE    := mpg
 LOCAL_ARM_MODE  := arm
 LOCAL_SRC_FILES := MP3Decoder.cpp $(MPG123_SRC_FILES)
 LOCAL_CFLAGS    := $(MPG123_CFLAGS)
-LOCAL_LDLIBS    := -llog
+LOCAL_LDLIBS    := -llog -g
 
 include $(BUILD_SHARED_LIBRARY)
 

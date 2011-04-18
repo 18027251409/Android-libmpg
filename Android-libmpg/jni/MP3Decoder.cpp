@@ -8,7 +8,6 @@
 #include "mpg123.h"
 #include <jni.h>
 
-
 struct Mp3File
 {
 	mpg123_handle* handle;
@@ -20,7 +19,7 @@ struct Mp3File
 	size_t leftSamples;
 	size_t offset;
 
-	Mp3File(mpg123_handle *handle) : handle(handle), buffer(NULL)
+	Mp3File(mpg123_handle *handle) : handle(handle), buffer(NULL), leftSamples(0), offset(0)
 	{
 	}
 
@@ -28,7 +27,7 @@ struct Mp3File
 	{
 		mpg123_close(handle);
 		mpg123_delete(handle);
-		delete[] buffer;
+		free(buffer);
 	}
 };
 
@@ -183,14 +182,10 @@ JNIEXPORT jlong JNICALL Java_nobleworks_libmpg_MP3Decoder_openFile(JNIEnv *env, 
 		if (err == MPG123_OK)
 		{
 			int encoding;
-			int channels;
-			long rate;
-
-			if (mpg123_getformat(mh, &rate, &channels, &encoding) == MPG123_OK)
+			if (mpg123_getformat(mh, &mp3->rate, &mp3->channels, &encoding) == MPG123_OK)
 			{
 				if(encoding == MPG123_ENC_SIGNED_16)
 				{
-/*
 				    // Signed 16 is the default output format anyways; it would actually by only different if we forced it.
 					// So this check is here just for this explanation.
 
@@ -207,7 +202,6 @@ JNIEXPORT jlong JNICALL Java_nobleworks_libmpg_MP3Decoder_openFile(JNIEnv *env, 
 					else
 						mp3->length = length / mp3->rate;
 
-*/
 					return (jlong)mp3;
 				}
 			}
@@ -248,8 +242,6 @@ static inline int readBuffer( Mp3File* mp3 )
 
 JNIEXPORT jint JNICALL Java_nobleworks_libmpg_MP3Decoder_readSamples(JNIEnv *env, jobject instance, jlong handle, jobject buffer, jint numSamples)
 {
-	static int c = 10;
-	return c-- > 0?numSamples : 0;
 	Mp3File *mp3 = (Mp3File *)handle;
 	short* target = (short*)env->GetDirectBufferAddress(buffer);
 
@@ -270,7 +262,6 @@ JNIEXPORT jint JNICALL Java_nobleworks_libmpg_MP3Decoder_readSamples(JNIEnv *env
 			if( result == 0 )
 				return 0;
 		}
-
 	}
 
 	if( idx > numSamples )
