@@ -200,7 +200,7 @@ JNIEXPORT jlong JNICALL Java_nobleworks_libmpg_MP3Decoder_openFile(JNIEnv *env, 
 					if( length == MPG123_ERR )
 						mp3->length = 0;
 					else
-						mp3->length = length / mp3->rate;
+                                          mp3->length = length / (float)mp3->rate;
 
 					return (jlong)mp3;
 				}
