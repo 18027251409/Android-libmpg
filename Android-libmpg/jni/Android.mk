@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I . -I libmpg123 -g \
+MPG123_CFLAGS := -O2 -Wall -D__ANDROID__ -I target/native/javah -I libmpg123 -g \
 	-DACCURATE_ROUNDING \
 	-DOPT_ARM \
 	-DREAL_IS_FIXED \

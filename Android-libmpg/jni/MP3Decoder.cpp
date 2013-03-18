@@ -1,7 +1,7 @@
-#include "generatedJniHeaders/nobleworks_libmpg_MP3Decoder.h"
-#include "generatedJniHeaders/nobleworks_libmpg_MP3Decoder_Error.h"
-#include "generatedJniHeaders/nobleworks_libmpg_MP3Decoder_Feature.h"
-#include "generatedJniHeaders/nobleworks_libmpg_Encoding_Ordinals.h"
+#include "nobleworks_libmpg_MP3Decoder.h"
+#include "nobleworks_libmpg_MP3Decoder_Error.h"
+#include "nobleworks_libmpg_MP3Decoder_Feature.h"
+#include "nobleworks_libmpg_Encoding_Ordinals.h"
 #include <stddef.h>
 #include <fcntl.h>
 #include "libmpg123/compat.h"
