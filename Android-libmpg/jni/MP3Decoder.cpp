@@ -1,6 +1,6 @@
 #include "generatedJniHeaders/nobleworks_libmpg_MP3Decoder.h"
 #include "generatedJniHeaders/nobleworks_libmpg_MP3Decoder_Error.h"
-#include "generatedJniHeaders/nobleworks_libmpg_MP3Decoder_Feature.h"
+#include "generatedJniHeaders/nobleworks_libmpg_Feature.h"
 #include "generatedJniHeaders/nobleworks_libmpg_Encoding_Ordinals.h"
 #include <stddef.h>
 #include <fcntl.h>
@@ -228,7 +228,7 @@ JNIEXPORT void JNICALL Java_nobleworks_libmpg_MP3Decoder_delete
     delete mp3;
 }
 
-JNIEXPORT jboolean JNICALL Java_nobleworks_libmpg_MP3Decoder_00024Feature_isFeatureSupported
+JNIEXPORT jboolean JNICALL Java_nobleworks_libmpg_Feature_isFeatureSupported
   (JNIEnv *env, jclass, jint feature)
 {
     return mpg123_feature( (enum mpg123_feature_set)feature);
