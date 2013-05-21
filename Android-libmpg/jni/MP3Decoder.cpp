@@ -217,6 +217,7 @@ JNIEXPORT jlong JNICALL Java_nobleworks_libmpg_MP3Decoder_openFile(JNIEnv *env, 
 
         delete mp3;
     }
+
     return 0;
 }
 
