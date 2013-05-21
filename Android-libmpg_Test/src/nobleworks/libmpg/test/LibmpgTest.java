@@ -41,11 +41,24 @@ public class LibmpgTest extends AndroidTestCase
                 Encoding.PCM_FLOAT_64
         };
 
+        Encoding[] unexpectedEncodings =
+        {
+                Encoding.PCM_UNSIGNED_24, Encoding.PCM_SIGNED_24,
+                Encoding.PCM_UNSIGNED_32, Encoding.PCM_SIGNED_32,
+                // Only one size of floating point is supported
+                Encoding.PCM_FLOAT_32
+        };
+
         Encoding[] supportedEncodings = MP3Decoder.getSupportedEncodings();
         
         for(Encoding encoding : expectedEncodings)
         {
             assertThat(supportedEncodings,hasItemInArray(encoding));
+        }
+        
+        for(Encoding encoding : unexpectedEncodings)
+        {
+            assertThat(supportedEncodings,not(hasItemInArray(encoding)));
         }
     }
     
