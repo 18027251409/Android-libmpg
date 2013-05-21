@@ -13,7 +13,7 @@ public class MP3Decoder
         int OK = 0;                // Success
         int BAD_OUTFORMAT = 1;     // Unable to set up output format!
         int BAD_CHANNEL = 2;       // Invalid channel number specified.
-        int BAD_RATE = 3;          // Invalid sample rate specified. 
+        int BAD_RATE = 3;          // Invalid sample rate specified.
         int ERR_16TO8TABLE = 4;    // Unable to allocate memory for 16 to 8 converter table!
         int BAD_PARAM = 5;         // Bad parameter id!
         int BAD_BUFFER = 6;        // Bad buffer given -- invalid pointer or too small size.
@@ -52,7 +52,7 @@ public class MP3Decoder
         int BAD_VALUE = 39;        // A bad value has been given, somewhere.
         int LSEEK_FAILED = 40;     // Low-level seek failed.
         int BAD_CUSTOM_IO = 41;    // Custom I/O not prepared.
-        int LFS_OVERFLOW = 42;     // Offset value overflow during translation of large file API calls -- your client program cannot handle that large file.        
+        int LFS_OVERFLOW = 42;     // Offset value overflow during translation of large file API calls -- your client program cannot handle that large file.
     }
     
     /**
@@ -150,56 +150,55 @@ public class MP3Decoder
     public static native int[] getSupportedRates();
 
     private static native int[] getEncodings();
-    
+
     public static Encoding[] getSupportedEncodings()
     {
         int[] encodings = getEncodings();
-        
+
         Encoding[] result = new Encoding[encodings.length];
-        
+
         for(int i = 0; i < encodings.length; i++)
         {
             result[i] = Encoding.values()[encodings[i]];
         }
-        
+
         return result;
     }
-    
+
     public static native String getErrorMessage(int errorCode);
-    
+
     private long handle;
-    
+
     private native void delete(long handle);
+
+    private native long openFile (String filename);
 
     /**
      * Opens the given file for mp3 decoding. Throws an IllegalArugmentException in case the file could not be opened.
-     * 
+     *
      * @param filename the filename
      */
     public MP3Decoder(String filename)
     {
         handle = openFile(filename);
-
-  //
- //       if (handle == 0) throw new IllegalArgumentException("couldn't open file");
+ 
+        if (handle == 0) throw new IllegalArgumentException("couldn't open file");
     }
 
-    public native int setFlags(long handle, int flags);
-    
+    private native int setFlags(long handle, int flags);
+
     public int setFlags(int flags)
     {
         return setFlags(handle, flags);
     }
-    
-    public native int getFlags(long handle);
-    
+
+    private native int getFlags(long handle);
+
     public int getFlags()
     {
         return getFlags(handle);
     }
-    
-    private native long openFile (String filename);
- 
+
     public void dispose()
     {
         if(handle != 0)
@@ -208,17 +207,31 @@ public class MP3Decoder
             handle = 0;
         }
     }
-    
+
     public void finalize()
     {
         dispose();
     }
 
-    public int readSamples (ShortBuffer samples)
+    public int readSamples(ShortBuffer samples)
     {
         int read = readSamples(handle, samples, samples.capacity());
         samples.position(0);
         return read;
+    }
+
+    private native int seek(long handle, long sampleOffset);
+
+    public int seek(long sampleOffset)
+    {
+        return seek(handle, sampleOffset);
+    }
+
+    private native long position (long handle);
+
+    public long getPosition()
+    {
+        return position(handle);
     }
 
     private native int readSamples (long handle, ShortBuffer buffer, int numSamples);
@@ -232,8 +245,7 @@ public class MP3Decoder
 
     private native int getNumChannels(long handle);
     private native int getRate(long handle);
-    private native float getLength(long handle);
-
+    private native long getLength(long handle);
 
     public int getNumChannels()
     {
@@ -245,7 +257,7 @@ public class MP3Decoder
         return getRate(handle);
     }
 
-    public float getLength()
+    public long getLength()
     {
         return getLength(handle);
     }

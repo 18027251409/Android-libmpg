@@ -14,7 +14,7 @@ public enum Encoding
     PCM_UNSIGNED_32(false, 32, false),
     PCM_FLOAT_32(true, 32, true),
     PCM_FLOAT_64(true, 64, true);
- 
+
     public interface Ordinals
     {
         byte ULAW_8 = 0;
@@ -31,20 +31,19 @@ public enum Encoding
         byte PCM_FLOAT_64 = 11;
     }
 
+    /**
+     * The type of encoding format, which is PCM, ULAW, or ALAW
+     */
     public enum Format
     {
         PCM, ULAW, ALAW;
     }
 
-    private final boolean signed;
-    private final int bits;
-    private final boolean floatingPoint;
-    private final Format format;
-
     private Encoding(boolean signed, int bits, boolean isFloatingPoint)
     {
         this(signed, bits, isFloatingPoint, Format.PCM);
     }
+
     private Encoding(boolean signed, int bits, boolean isFloatingPoint, Format format)
     {
         this.signed = signed;
@@ -52,6 +51,11 @@ public enum Encoding
         this.floatingPoint = isFloatingPoint;
         this.format = format;
     }
+
+    private final boolean signed;
+    private final int bits;
+    private final boolean floatingPoint;
+    private final Format format;
 
     public int getBits()
     {
